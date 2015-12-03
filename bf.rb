@@ -1,6 +1,6 @@
 require 'io/console'
 class BrainfuckInt
-    attr_reader :code
+    attr_reader :code, :mem_limit, :memory
     def initialize(path)
         @code = []
         @code = File.read(path).split('').select{|c| valid?(c)}
@@ -145,15 +145,17 @@ def help()
     print "Usage: \n\truby ./bf.rb example.bf\n"
 end
 
-if ARGV.length != 1
-    help
-    exit 1
-end
-path = ARGV[0]
-if not File.file?(path)
-    print "Invalid path: " + path + "\n"
-    exit 1
-end
+if __FILE__ == $0
+    if ARGV.length != 1
+        help
+        exit 1
+    end
+    path = ARGV[0]
+    if not File.file?(path)
+        print "Invalid path: " + path + "\n"
+        exit 1
+    end
 
-interpreter = BrainfuckInt.new(path)
-interpreter.parse
+    interpreter = BrainfuckInt.new(path)
+    interpreter.parse
+end
