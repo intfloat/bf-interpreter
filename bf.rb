@@ -1,17 +1,16 @@
-require 'io/console'
 class BrainfuckInt
-    attr_reader :code, :mem_limit, :memory
+    attr_accessor :code, :mem_limit, :memory, :buffer
     def initialize(path)
-        @code = []
         @code = File.read(path).split('').select{|c| valid?(c)}
         if !bracket_match?
             print "Error: Unmatched brackets\n"
             exit 1
         end
-        @mem_limit = 32 * 1024
+        @mem_limit = 32 * 1024          # default memory size is 32KB
         @memory = Array.new(@mem_limit, 0)
         @pc = 0
         @mem_ptr = 0
+        @buffer = nil
     end
 
     def parse()
@@ -51,7 +50,7 @@ private
     end
 
     def read()
-        @memory[@mem_ptr] = STDIN.getc.ord
+        @memory[@mem_ptr] = get_char().to_i
         next_pc
     end
 
@@ -138,6 +137,15 @@ private
             i += 1
         end
         true
+    end
+
+    def get_char()
+        while @buffer == nil or @buffer.length == 0
+            @buffer = STDIN.gets
+        end
+        next_char = @buffer[0]
+        @buffer = @buffer[1, @buffer.length]
+        next_char
     end
 end
 
