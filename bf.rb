@@ -1,5 +1,5 @@
 class BrainfuckInt
-    attr_accessor :code, :mem_limit, :memory, :buffer
+    attr_accessor :code, :mem_limit, :memory, :buffer, :mem_ptr, :pc
     def initialize(path)
         @code = File.read(path).split('').select{|c| valid?(c)}
         if !bracket_match?
@@ -10,7 +10,7 @@ class BrainfuckInt
         @memory = Array.new(@mem_limit, 0)
         @pc = 0
         @mem_ptr = 0
-        @buffer = nil
+        @buffer = ''
     end
 
     def parse()
@@ -50,7 +50,7 @@ private
     end
 
     def read()
-        @memory[@mem_ptr] = get_char().to_i
+        @memory[@mem_ptr] = get_char().ord
         next_pc
     end
 

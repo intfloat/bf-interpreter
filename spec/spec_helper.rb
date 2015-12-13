@@ -15,3 +15,13 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+# Reference: http://stackoverflow.com/questions/23349863/testing-stdin-in-ruby
+def capture_standard_output(&block)
+    original_stream = $stdout
+    $stdout = mock = StringIO.new
+    yield
+    mock.string.chomp
+    ensure
+        $stdout = original_stream
+end
