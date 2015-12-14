@@ -1,6 +1,6 @@
 # bf-interpreter
 
-![Alt text](https://travis-ci.org/intfloat/bf-interpreter.svg?branch=master)
+[![Build Status](https://travis-ci.org/intfloat/bf-interpreter.svg?branch=master)](https://travis-ci.org/intfloat/bf-interpreter)
 
 Brainfuck interpreter in Ruby.
 
